@@ -1,0 +1,254 @@
+openapi: 3.0.4
+info:
+  title: Subscriptions API
+  description: An ASP.NET Core Web API for managing subscriptions
+  contact:
+    name: API Support
+    email: support@example.com
+  version: v1
+paths:
+  /Subscriptions:
+    get:
+      tags:
+        - Subscriptions
+      summary: Retrieves all subscriptions.
+      responses:
+        '200':
+          description: Returns the list of subscriptions.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionDTO'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionDTO'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SubscriptionDTO'
+    post:
+      tags:
+        - Subscriptions
+      summary: Creates a new subscription.
+      requestBody:
+        description: The subscription data to create.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+      responses:
+        '201':
+          description: Returns the newly created subscription.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDTO'
+        '400':
+          description: If the subscription data is invalid.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  '/Subscriptions/{id}':
+    get:
+      tags:
+        - Subscriptions
+      summary: Retrieves a specific subscription by its unique identifier.
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the subscription.
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '200':
+          description: Returns the requested subscription.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDTO'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDTO'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionDTO'
+        '404':
+          description: If the subscription is not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+        - Subscriptions
+      summary: Updates an existing subscription.
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the subscription to update.
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: The updated subscription data.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionDTO'
+      responses:
+        '204':
+          description: If the subscription was successfully updated.
+        '404':
+          description: If the subscription is not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '400':
+          description: If the subscription data is invalid.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+        - Subscriptions
+      summary: Deletes a subscription.
+      parameters:
+        - name: id
+          in: path
+          description: The unique identifier of the subscription to delete.
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        '204':
+          description: If the subscription was successfully deleted.
+        '404':
+          description: If the subscription is not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+          nullable: true
+        title:
+          type: string
+          nullable: true
+        status:
+          type: integer
+          format: int32
+          nullable: true
+        detail:
+          type: string
+          nullable: true
+        instance:
+          type: string
+          nullable: true
+      additionalProperties: { }
+    SubscriptionDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Gets or sets the unique identifier for the subscription.
+          format: int32
+          example: 1
+        name:
+          type: string
+          description: Gets or sets the name of the subscriber.
+          nullable: true
+          example: John Doe
+        email:
+          type: string
+          description: Gets or sets the email address of the subscriber.
+          nullable: true
+          example: john.doe@example.com
+        plan:
+          type: string
+          description: Gets or sets the subscription plan type.
+          nullable: true
+          example: Premium
+        startDate:
+          type: string
+          description: Gets or sets the start date of the subscription.
+          format: date-time
+          example: '2024-01-01T00:00:00Z'
+        endDate:
+          type: string
+          description: Gets or sets the end date of the subscription. Null if the subscription has no end date.
+          format: date-time
+          nullable: true
+          example: '2024-12-31T23:59:59Z'
+        isActive:
+          type: boolean
+          description: Gets or sets a value indicating whether the subscription is currently active.
+          example: true
+      additionalProperties: false
+      description: Represents a subscription data transfer object.
+tags:
+  - name: Subscriptions
