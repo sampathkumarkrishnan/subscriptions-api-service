@@ -7,9 +7,14 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
+	<ItemGroup>
+		<None Include="..\.github\workflows\generate-openapi-docs.yml" />
+	</ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="7.3.0" />
+	  <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.2" />
+	  <PackageReference Include="Microsoft.OpenApi" Version="2.4.1" />
+	  <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
   </ItemGroup>
 
 </Project>
